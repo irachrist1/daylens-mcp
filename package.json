@@ -1,16 +1,40 @@
 {
   "name": "daylens-mcp",
   "version": "1.0.0",
-  "description": "MCP server that exposes your Daylens activity timeline to Claude Code",
+  "description": "MCP server for Daylens — ask your AI assistant what you were working on",
   "type": "module",
   "bin": {
     "daylens-mcp": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "install.sh",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "start": "node --no-warnings dist/index.js"
+    "start": "node --no-warnings dist/index.js",
+    "prepare": "npm run build"
   },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "daylens",
+    "productivity",
+    "activity-tracker",
+    "claude",
+    "cursor",
+    "ai"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/irachrist1/daylens-mcp.git"
+  },
+  "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0"
   },
