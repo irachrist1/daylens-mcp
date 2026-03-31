@@ -6,6 +6,9 @@
 
 Zero cloud. Zero API keys. Your data never leaves your Mac.
 
+[![npm version](https://img.shields.io/npm/v/daylens-mcp.svg)](https://www.npmjs.com/package/daylens-mcp)
+[![Install in Cursor](https://cursor.com/deeplink/mcp-install-badge.svg)](cursor://anysphere.cursor-deeplink/mcp/install?name=daylens&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImRheWxlbnMtbWNwIl19)
+
 ---
 
 ## What is Daylens?
@@ -43,78 +46,49 @@ You › find all my coding sessions from the last 3 days
 
 ---
 
-## Install in 30 seconds
+## Install
 
-### Option A — Auto-installer (recommended)
+### Claude Code — one command
 
-Detects all your MCP clients and configures them automatically:
+```bash
+claude mcp add daylens -- npx -y daylens-mcp
+```
+
+Restart Claude Code. Done.
+
+---
+
+### Cursor — one click
+
+[![Install in Cursor](https://cursor.com/deeplink/mcp-install-badge.svg)](cursor://anysphere.cursor-deeplink/mcp/install?name=daylens&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImRheWxlbnMtbWNwIl19)
+
+Or add to `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "daylens": {
+      "command": "npx",
+      "args": ["-y", "daylens-mcp"]
+    }
+  }
+}
+```
+
+---
+
+### All clients at once — auto-installer
+
+Detects Claude Code, Claude Desktop, Cursor, and Windsurf on your machine and configures them all:
 
 ```bash
 git clone https://github.com/irachrist1/daylens-mcp.git
 cd daylens-mcp && bash install.sh
 ```
 
-That's it. Restart your AI client and ask "what was I working on today?"
-
 ---
 
-### Option B — Claude Code one-liner
-
-```bash
-git clone https://github.com/irachrist1/daylens-mcp.git
-cd daylens-mcp && npm install && npm run build
-claude mcp add daylens -- node --no-warnings $(pwd)/dist/index.js
-```
-
----
-
-### Option C — Manual setup per client
-
-<details>
-<summary><strong>Claude Code</strong></summary>
-
-Add to `~/.claude/mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "daylens": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["--no-warnings", "/absolute/path/to/daylens-mcp/dist/index.js"]
-    }
-  }
-}
-```
-
-Or use the CLI:
-```bash
-claude mcp add daylens -- node --no-warnings /absolute/path/to/daylens-mcp/dist/index.js
-```
-
-</details>
-
-<details>
-<summary><strong>Cursor</strong></summary>
-
-**One-click install:**
-
-[![Install in Cursor](https://cursor.com/deeplink/mcp-install-badge.svg)](cursor://anysphere.cursor-deeplink/mcp/install?name=daylens&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImRheWxlbnMtbWNwIl19)
-
-Or manually add to `~/.cursor/mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "daylens": {
-      "command": "node",
-      "args": ["--no-warnings", "/absolute/path/to/daylens-mcp/dist/index.js"]
-    }
-  }
-}
-```
-
-</details>
+### Manual config for each client
 
 <details>
 <summary><strong>Claude Desktop</strong></summary>
@@ -125,12 +99,14 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 {
   "mcpServers": {
     "daylens": {
-      "command": "node",
-      "args": ["--no-warnings", "/absolute/path/to/daylens-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "daylens-mcp"]
     }
   }
 }
 ```
+
+Restart Claude Desktop.
 
 </details>
 
@@ -143,8 +119,8 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 {
   "mcpServers": {
     "daylens": {
-      "command": "node",
-      "args": ["--no-warnings", "/absolute/path/to/daylens-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "daylens-mcp"]
     }
   }
 }
@@ -158,13 +134,13 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 
 - **[Daylens](https://github.com/irachrist1/daylens)** installed and running on macOS
 - **Node.js 22+** — check with `node --version`
-- At least one MCP-compatible client: Claude Code, Cursor, Windsurf, or Claude Desktop
+- Any MCP-compatible client: Claude Code, Cursor, Windsurf, or Claude Desktop
 
 ---
 
 ## Available tools
 
-Once installed, your AI assistant gains access to five tools it can call automatically:
+Once installed, your AI assistant can call these tools automatically:
 
 | Tool | Description |
 |---|---|
@@ -185,7 +161,7 @@ Daylens stores your activity in a local SQLite database at:
 ~/Library/Application Support/Daylens/daylens.sqlite
 ```
 
-`daylens-mcp` opens it **read-only** and exposes it as MCP tools. When you ask your AI a question about your work history, it calls the appropriate tool, queries the database, and answers with your real data.
+`daylens-mcp` opens it **read-only** and exposes it as MCP tools. When you ask a question about your work history, the right tool is called, your database is queried, and you get a real answer.
 
 No network calls. No background processes. The server starts on demand and exits when your client closes.
 
@@ -193,23 +169,20 @@ No network calls. No background processes. The server starts on demand and exits
 
 ## Troubleshooting
 
-**Server doesn't appear in my client**
-Fully restart your client after installing — not just a new chat window. In Claude Code, run `claude mcp list` to confirm it's registered.
+**Server doesn't appear after install**
+Fully restart your client — not just a new chat window. In Claude Code, run `claude mcp list` to confirm it registered.
 
 **"Database not found" error**
-Daylens must be installed and have tracked at least one session. The database is created on first launch.
+Make sure Daylens is installed and has tracked at least one session. The database is created on first launch.
 
 **Node version error**
-Requires Node.js 22+. Run `node --version` to check. Install the latest LTS from [nodejs.org](https://nodejs.org).
-
-**Permission denied on install.sh**
-Run `chmod +x install.sh` first.
+Requires Node.js 22+. Run `node --version` to check. Install from [nodejs.org](https://nodejs.org).
 
 ---
 
 ## Related
 
-- [Daylens](https://github.com/irachrist1/daylens) — the macOS activity tracker this is built on
+- [Daylens](https://github.com/irachrist1/daylens) — the macOS activity tracker this is built for
 - [Model Context Protocol](https://modelcontextprotocol.io) — the open standard for AI tool integrations
 
 ---

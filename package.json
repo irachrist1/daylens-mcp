@@ -4,10 +4,11 @@
   "description": "MCP server for Daylens — ask your AI assistant what you were working on",
   "type": "module",
   "bin": {
-    "daylens-mcp": "./dist/index.js"
+    "daylens-mcp": "bin/daylens-mcp.js"
   },
   "files": [
     "dist",
+    "bin",
     "install.sh",
     "README.md"
   ],
@@ -32,7 +33,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/irachrist1/daylens-mcp.git"
+    "url": "git+https://github.com/irachrist1/daylens-mcp.git"
   },
   "license": "MIT",
   "dependencies": {
